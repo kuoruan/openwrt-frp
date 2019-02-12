@@ -72,7 +72,7 @@ script:
 - make defconfig
 - make package/${PACKAGE}/compile V=s
 - find "${SDK_HOME}/bin/"
-- find "${SDK_HOME}/bin/" -name ${PACKAGE}-*.ipk -exec cp {} "$TRAVIS_BUILD_DIR" \;
+- find "${SDK_HOME}/bin/" -name ${PACKAGE}*.ipk -exec cp {} "$TRAVIS_BUILD_DIR" \;
 - ls -hl "$TRAVIS_BUILD_DIR" | grep .*\.ipk
 deploy:
   provider: releases
