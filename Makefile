@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=frp
-PKG_VERSION:=0.23.3
+PKG_VERSION:=0.24.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/fatedier/frp/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=7a1d16bc7918be79c149c87c3080e0c5d0d85d5277b913fa0dc9e2df1d7617c9
+PKG_HASH:=356ec7880f506fe9978f14f866285b6873c2ede2e08e571bc7ea7f1baff570ed
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -48,7 +48,7 @@ define frp/templates
     CATEGORY:=Network
     SUBMENU:=Web Servers/Proxies
     DEPENDS:=$$(GO_ARCH_DEPENDS)
-		GO_PKG_BUILD_PKG:=github.com/fatedier/frp/cmd/$(1)/
+    GO_PKG_BUILD_PKG:=github.com/fatedier/frp/cmd/$(1)/
   endef
 
   define Package/$(1)/description
