@@ -24,6 +24,7 @@ PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 
 GO_PKG:=github.com/fatedier/frp
+GO_PKG_BUILD_PKG:=github.com/fatedier/frp/cmd/...
 
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
@@ -48,7 +49,6 @@ define frp/templates
     CATEGORY:=Network
     SUBMENU:=Web Servers/Proxies
     DEPENDS:=$$(GO_ARCH_DEPENDS)
-    GO_PKG_BUILD_PKG:=github.com/fatedier/frp/cmd/$(1)/
   endef
 
   define Package/$(1)/description
