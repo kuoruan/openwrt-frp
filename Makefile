@@ -76,7 +76,9 @@ $(call Package/frp/Default/description)
 This package provides the source files for frpc/frps.
 endef
 
-TARGET_LDFLAGS+=' '-s' '-w
+define Build/Compile
+$(call GoPackage/Build/Compile,-ldflags "-s -w")
+endef
 
 FRP_COMPONENTS:=frpc frps
 
