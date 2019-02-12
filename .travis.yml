@@ -22,8 +22,6 @@ env:
   matrix:
   - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ar71xx/generic SDK=-sdk-ar71xx-generic_
   - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ramips/mt7620 SDK=-sdk-ramips-mt7620_
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ramips/mt7621 SDK=-sdk-ramips-mt7621_
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ramips/mt76x8 SDK=-sdk-ramips-mt76x8_
   - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm63xx/generic SDK=-sdk-brcm63xx-generic_
   - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/bcm53xx/generic SDK=-sdk-bcm53xx_
   - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm47xx/generic SDK=-sdk-brcm47xx-
