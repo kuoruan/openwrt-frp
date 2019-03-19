@@ -1,0 +1,44 @@
+--- a/go.mod
++++ b/go.mod
+@@ -7,13 +7,15 @@ require (
+ 	github.com/davecgh/go-spew v1.1.0 // indirect
+ 	github.com/fatedier/beego v0.0.0-20171024143340-6c6a4f5bd5eb
+ 	github.com/fatedier/golib v0.0.0-20181107124048-ff8cd814b049
+-	github.com/fatedier/kcp-go v0.0.0-20171023144637-cd167d2f15f4
++	github.com/fatedier/kcp-go v2.0.4-0.20190317085623-2063a803e6fe+incompatible
+ 	github.com/golang/snappy v0.0.0-20170215233205-553a64147049 // indirect
+ 	github.com/gorilla/context v1.1.1 // indirect
+ 	github.com/gorilla/mux v1.6.2
+ 	github.com/gorilla/websocket v1.2.0
+ 	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d
+ 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
++	github.com/klauspost/cpuid v1.2.0 // indirect
++	github.com/klauspost/reedsolomon v1.9.1 // indirect
+ 	github.com/mattn/go-runewidth v0.0.4 // indirect
+ 	github.com/pkg/errors v0.8.0 // indirect
+ 	github.com/pmezard/go-difflib v1.0.0 // indirect
+--- a/go.sum
++++ b/go.sum
+@@ -1,19 +1,16 @@
+ github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5/go.mod h1:wHh0iHkYZB8zMSxRWpUBQtwG5a7fFgvEO+odwuTv2gs=
+ github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+ github.com/fatedier/beego v0.0.0-20171024143340-6c6a4f5bd5eb/go.mod h1:wx3gB6dbIfBRcucp94PI9Bt3I0F2c/MyNEWuhzpWiwk=
+-github.com/fatedier/golib v0.0.0-20181107124048-ff8cd814b049 h1:teH578mf2ii42NHhIp3PhgvjU5bv+NFMq9fSQR8NaG8=
+ github.com/fatedier/golib v0.0.0-20181107124048-ff8cd814b049/go.mod h1:DqIrnl0rp3Zybg9zbJmozTy1n8fYJoX+QoAj9slIkKM=
+-github.com/fatedier/kcp-go v0.0.0-20171023144637-cd167d2f15f4/go.mod h1:YpCOaxj7vvMThhIQ9AfTOPW2sfztQR5WDfs7AflSy4s=
++github.com/fatedier/kcp-go v2.0.4-0.20190317085623-2063a803e6fe+incompatible/go.mod h1:YpCOaxj7vvMThhIQ9AfTOPW2sfztQR5WDfs7AflSy4s=
+ github.com/golang/snappy v0.0.0-20170215233205-553a64147049/go.mod h1:/XxbfmMg8lxefKM7IXC3fBNl/7bRcc72aCRzEWrmP2Q=
+-github.com/gorilla/context v1.1.1 h1:AWwleXJkX/nhcU9bZSnZoi3h/qGYqQAGhq6zZe/aQW8=
+ github.com/gorilla/context v1.1.1/go.mod h1:kBGZzfjB9CEq2AlWe17Uuf7NDRt0dE0s8S51q0aT7Yg=
+ github.com/gorilla/mux v1.6.2/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
+ github.com/gorilla/websocket v1.2.0/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
+-github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d h1:kJCB4vdITiW1eC1vq2e6IsrXKrZit1bv/TDYFGMp4BQ=
+ github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d/go.mod h1:+NfK9FKeTrX5uv1uIXGdwYDTeHna2qgaIlx54MXqjAM=
+-github.com/inconshreveable/mousetrap v1.0.0 h1:Z8tu5sraLXCXIcARxBp/8cbvlwVa7Z1NHg9XEKhtSvM=
+ github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
+-github.com/mattn/go-runewidth v0.0.4 h1:2BvfKmzob6Bmd4YsL0zygOqfdFnK7GR4QL06Do4/p7Y=
++github.com/klauspost/cpuid v1.2.0/go.mod h1:Pj4uuM528wm8OyEC2QMXAi2YiTZ96dNQPGgoMS4s3ek=
++github.com/klauspost/reedsolomon v1.9.1/go.mod h1:CwCi+NUr9pqSVktrkN+Ondf06rkhYZ/pcNv7fu+8Un4=
+ github.com/mattn/go-runewidth v0.0.4/go.mod h1:LwmH8dsx7+W8Uxz3IHJYH5QSwggIsqBzpuz5H//U1FU=
+ github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
