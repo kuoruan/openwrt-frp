@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=frp
-PKG_VERSION:=0.25.1
+PKG_VERSION:=0.25.2
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/fatedier/frp/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=33bda2e559f072e8423d8ef84a66b150c4a5fe986c892cbdd8b5bebe2f7956be
+PKG_HASH:=e9f3756eaceacea046f57135166577d1c27b70ffee53ccd32da77b7077209d06
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -52,7 +52,7 @@ define frp/templates
   endef
 
   define Package/$(1)/description
-  $(call Package/frp/Default/description)
+  $$(call Package/frp/Default/description)
 
   This package contains the $(1).
   endef
