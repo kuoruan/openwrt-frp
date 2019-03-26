@@ -55,8 +55,8 @@ install:
 - export SDK_HOME="$(mktemp -d)"
 - cd "$SDK_HOME"
 - tar -Jxf "${DOWNLOAD_DIR}/${SDK_FILE}" --strip=1
-- \[ -d "${HOME}/dl" \] || mkdir -p "${HOME}/dl"
-- \[ -d "dl" \] && rm -rf dl
+- test -d "${HOME}/dl" || mkdir -p "${HOME}/dl"
+- test -d "dl" && rm -rf dl
 - ln -s "${HOME}/dl/" dl
 - echo "src-git base https://github.com/openwrt/openwrt.git" >feeds.conf
 - echo "src-git packages https://github.com/openwrt/packages.git" >>feeds.conf
