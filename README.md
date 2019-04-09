@@ -19,6 +19,8 @@ opkg install frps_*.ipk
 
 安装完毕，你可以在 ```/usr/bin``` 目录下找到对应的二进制文件。
 
+获取 Luci 请访问：[kuoruan/luci-app-frpc](https://github.com/kuoruan/luci-app-frpc)
+
 ## 编译说明
 
 请使用最新版的 OpenWrt SDK 或 master 版源代码。
