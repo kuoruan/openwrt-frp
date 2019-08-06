@@ -4,11 +4,11 @@ Frpc/Frps for OpenWrt
 
 OpenWrt/LEDE 上可用的 Frp 客户端/服务端
 
-[![Release Version](https://img.shields.io/github/release/kuoruan/openwrt-frp.svg)](https://github.com/kuoruan/openwrt-frp/releases/latest) [![Latest Release Download](https://img.shields.io/github/downloads/kuoruan/openwrt-frp/total.svg)](https://github.com/kuoruan/openwrt-frp/releases/latest)
+[![Release Version](https://img.shields.io/github/release/kuoruan/openwrt-frp.svg)](https://github.com/kuoruan/openwrt-frp/releases/latest) [![Latest Release Download](https://img.shields.io/github/downloads/kuoruan/openwrt-frp/latest/total.svg)](https://github.com/kuoruan/openwrt-frp/releases/latest) [![Total Download](https://img.shields.io/github/downloads/kuoruan/openwrt-frp/total.svg)](https://github.com/kuoruan/openwrt-frp/releases)
 
 ## 安装说明
 
-1. 到 [release](https://github.com/kuoruan/openwrt-frp/releases) 页面下载最新版的```frpc``` 或 ```frps```（注：请根据你的路由器架构下载对应版本）
+1. 到 [release](https://github.com/kuoruan/openwrt-frp/releases) 页面下载最新版的`frpc` 或 `frps`（注：请根据你的路由器架构下载对应版本）
 
 2. 将文件上传到你的路由器上，进行安装
 
@@ -17,7 +17,7 @@ opkg install frpc_*.ipk
 opkg install frps_*.ipk
 ```
 
-安装完毕，你可以在 ```/usr/bin``` 目录下找到对应的二进制文件。
+安装完毕，你可以在 `/usr/bin` 目录下找到对应的二进制文件。
 
 获取 Luci 请访问：[kuoruan/luci-app-frpc](https://github.com/kuoruan/luci-app-frpc)
 
