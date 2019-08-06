@@ -17,7 +17,6 @@ env:
     - PACKAGE=frp
     - USER=kuoruan
     - REPO=openwrt-frp
-    - CCACHE_VERSION=3.6
     - DOWNLOAD_DIR=${HOME}/files
   matrix:
     - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ar71xx/generic SDK=-sdk-ar71xx-generic_
@@ -36,12 +35,6 @@ install:
       travis_terminate 0
     fi
   - mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
-  - wget -c "http://us.archive.ubuntu.com/ubuntu/pool/main/c/ccache/ccache_${CCACHE_VERSION}-1_amd64.deb"
-  - mkdir -p "${HOME}/local"
-  - sudo apt-get install -yq dpkg
-  - dpkg -x "ccache_${CCACHE_VERSION}-1_amd64.deb" "${HOME}/local"
-  - export PATH="${HOME}/local/usr/bin:$PATH"
-  - cd "$DOWNLOAD_DIR"
   - wget "${SDK_PATH}/sha256sums" -O sha256sums
   - |
     if ! grep -- "$SDK" sha256sums > sha256sums.small 2>/dev/null ; then
