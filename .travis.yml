@@ -7,77 +7,78 @@ compiler: gcc
 cache:
   bundler: true
   directories:
-  - "${HOME}/dl"
-  - "${HOME}/files"
+    - "${HOME}/dl"
+    - "${HOME}/files"
 git:
   depth: 3
   submodules: false
 env:
   global:
-  - PACKAGE=frp
-  - USER=kuoruan
-  - REPO=openwrt-frp
-  - CCACHE_VERSION=3.6
-  - DOWNLOAD_DIR=${HOME}/files
+    - PACKAGE=frp
+    - USER=kuoruan
+    - REPO=openwrt-frp
+    - CCACHE_VERSION=3.6
+    - DOWNLOAD_DIR=${HOME}/files
   matrix:
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ar71xx/generic SDK=-sdk-ar71xx-generic_
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ramips/mt7620 SDK=-sdk-ramips-mt7620_
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm63xx/generic SDK=-sdk-brcm63xx-generic_
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/bcm53xx/generic SDK=-sdk-bcm53xx_
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm47xx/generic SDK=-sdk-brcm47xx-
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ipq806x/generic SDK=-sdk-ipq806x_
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ipq40xx/generic SDK=-sdk-ipq40xx_
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/x86/generic SDK=-sdk-x86-generic_
-  - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/x86/64 SDK=-sdk-x86-64_
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ar71xx/generic SDK=-sdk-ar71xx-generic_
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ramips/mt7620 SDK=-sdk-ramips-mt7620_
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm2708/bcm2710 SDK=-sdk-brcm2708-bcm2710_
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm63xx/generic SDK=-sdk-brcm63xx-generic_
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/bcm53xx/generic SDK=-sdk-bcm53xx_
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm47xx/generic SDK=-sdk-brcm47xx-
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/mvebu/cortexa9 SDK=-sdk-mvebu-cortexa9_
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ipq806x/generic SDK=-sdk-ipq806x_
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/x86/generic SDK=-sdk-x86-generic_
+    - SDK_PATH=https://downloads.openwrt.org/snapshots/targets/x86/64 SDK=-sdk-x86-64_
 install:
-- |
-  if [ -z "$TRAVIS_TAG" ] && [ "x$SDK" != "x-sdk-x86-64_" ] ; then
-    travis_terminate 0
-  fi
-- mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
-- wget -c "http://us.archive.ubuntu.com/ubuntu/pool/main/c/ccache/ccache_${CCACHE_VERSION}-1_amd64.deb"
-- mkdir -p "${HOME}/local"
-- sudo apt-get install -yq dpkg
-- dpkg -x "ccache_${CCACHE_VERSION}-1_amd64.deb" "${HOME}/local"
-- export PATH="${HOME}/local/usr/bin:$PATH"
-- cd "$DOWNLOAD_DIR"
-- wget "${SDK_PATH}/sha256sums" -O sha256sums
-- |
-  if ! grep -- "$SDK" sha256sums > sha256sums.small 2>/dev/null ; then
-    printf "\033[1;31m=== Can not find ${SDK} file in sha256sums.\033[m\n"
-    exit 1
-  fi
-- export SDK_FILE="$(cat sha256sums.small | cut -d' ' -f2 | sed 's/*//g')"
-- |
-  if ! sha256sum -c ./sha256sums.small 2>/dev/null ; then
-    wget "${SDK_PATH}/${SDK_FILE}" -O "$SDK_FILE"
-    if ! sha256sum -c ./sha256sums.small 2>/dev/null ; then
-      printf "\033[1;31m=== SDK can not be verified!\033[m\n"
+  - |
+    if [ -z "$TRAVIS_TAG" ] && [ "x$SDK" != "x-sdk-x86-64_" ] ; then
+      travis_terminate 0
+    fi
+  - mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
+  - wget -c "http://us.archive.ubuntu.com/ubuntu/pool/main/c/ccache/ccache_${CCACHE_VERSION}-1_amd64.deb"
+  - mkdir -p "${HOME}/local"
+  - sudo apt-get install -yq dpkg
+  - dpkg -x "ccache_${CCACHE_VERSION}-1_amd64.deb" "${HOME}/local"
+  - export PATH="${HOME}/local/usr/bin:$PATH"
+  - cd "$DOWNLOAD_DIR"
+  - wget "${SDK_PATH}/sha256sums" -O sha256sums
+  - |
+    if ! grep -- "$SDK" sha256sums > sha256sums.small 2>/dev/null ; then
+      printf "\033[1;31m=== Can not find ${SDK} file in sha256sums.\033[m\n"
       exit 1
     fi
-  fi
-- file "${DOWNLOAD_DIR}/${SDK_FILE}"
-- export SDK_HOME="$(mktemp -d)"
-- cd "$SDK_HOME"
-- tar -Jxf "${DOWNLOAD_DIR}/${SDK_FILE}" --strip=1
-- test -d "${HOME}/dl" || mkdir -p "${HOME}/dl"
-- test -d "dl" && rm -rf dl
-- ln -s "${HOME}/dl/" dl
-- echo "src-git base https://github.com/openwrt/openwrt.git" >feeds.conf
-- echo "src-git packages https://github.com/openwrt/packages.git" >>feeds.conf
-- echo "src-git luci https://github.com/openwrt/luci.git" >>feeds.conf
-- echo "src-git routing https://git.openwrt.org/feed/routing.git" >>feeds.conf
-- echo "src-git telephony https://github.com/openwrt/telephony.git" >>feeds.conf
-- ln -s "$TRAVIS_BUILD_DIR" "package/${PACKAGE}"
+  - export SDK_FILE="$(cat sha256sums.small | cut -d' ' -f2 | sed 's/*//g')"
+  - |
+    if ! sha256sum -c ./sha256sums.small 2>/dev/null ; then
+      wget "${SDK_PATH}/${SDK_FILE}" -O "$SDK_FILE"
+      if ! sha256sum -c ./sha256sums.small 2>/dev/null ; then
+        printf "\033[1;31m=== SDK can not be verified!\033[m\n"
+        exit 1
+      fi
+    fi
+  - file "${DOWNLOAD_DIR}/${SDK_FILE}"
+  - export SDK_HOME="$(mktemp -d)"
+  - cd "$SDK_HOME"
+  - tar -Jxf "${DOWNLOAD_DIR}/${SDK_FILE}" --strip=1
+  - test -d "${HOME}/dl" || mkdir -p "${HOME}/dl"
+  - test -d "dl" && rm -rf dl
+  - ln -s "${HOME}/dl/" dl
+  - echo "src-git base https://github.com/openwrt/openwrt.git" >feeds.conf
+  - echo "src-git packages https://github.com/openwrt/packages.git" >>feeds.conf
+  - echo "src-git luci https://github.com/openwrt/luci.git" >>feeds.conf
+  - echo "src-git routing https://git.openwrt.org/feed/routing.git" >>feeds.conf
+  - echo "src-git telephony https://github.com/openwrt/telephony.git" >>feeds.conf
+  - ln -s "$TRAVIS_BUILD_DIR" "package/${PACKAGE}"
 script:
-- cd "$SDK_HOME"
-- "./scripts/feeds update -a >/dev/null"
-- "./scripts/feeds install -a >/dev/null"
-- make defconfig
-- make package/${PACKAGE}/compile V=s
-- find "${SDK_HOME}/bin/"
-- find "${SDK_HOME}/bin/" -name ${PACKAGE}*.ipk -exec cp {} "$TRAVIS_BUILD_DIR" \;
-- ls -hl "$TRAVIS_BUILD_DIR" | grep .*\.ipk
+  - cd "$SDK_HOME"
+  - "./scripts/feeds update -a >/dev/null"
+  - "./scripts/feeds install -a >/dev/null"
+  - make defconfig
+  - make package/${PACKAGE}/compile V=s
+  - find "${SDK_HOME}/bin/"
+  - find "${SDK_HOME}/bin/" -name ${PACKAGE}*.ipk -exec cp {} "$TRAVIS_BUILD_DIR" \;
+  - ls -hl "$TRAVIS_BUILD_DIR" | grep .*\.ipk
 deploy:
   provider: releases
   file_glob: true
