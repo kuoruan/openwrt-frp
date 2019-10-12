@@ -26,6 +26,8 @@ PKG_USE_MIPS16:=0
 GO_PKG:=github.com/fatedier/frp
 GO_PKG_BUILD_PKG:=github.com/fatedier/frp/cmd/...
 
+GO_PKG_LDFLAGS:=-s -w
+
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
@@ -63,23 +65,6 @@ define frp/templates
   endef
 endef
 
-define Package/golang-github-fatedier-frp-dev
-$(call Package/frp/Default)
-$(call GoPackage/GoSubMenu)
-  TITLE+= (source files)
-  PKGARCH:=all
-endef
-
-define Package/golang-github-fatedier-frp-dev/description
-$(call Package/frp/Default/description)
-
-This package provides the source files for frpc/frps.
-endef
-
-define Build/Compile
-$(call GoPackage/Build/Compile,-ldflags "-s -w")
-endef
-
 FRP_COMPONENTS:=frpc frps
 
 $(foreach component,$(FRP_COMPONENTS), \
@@ -87,6 +72,3 @@ $(foreach component,$(FRP_COMPONENTS), \
   $(eval $(call GoBinPackage,$(component))) \
   $(eval $(call BuildPackage,$(component))) \
 )
-
-$(eval $(call GoSrcPackage,golang-github-fatedier-frp-dev))
-$(eval $(call BuildPackage,golang-github-fatedier-frp-dev))

@@ -39,7 +39,6 @@ git clone https://github.com/kuoruan/openwrt-frp.git package/frp
 
 make menuconfig
 
-Languages  ---> Go  ---> <M> golang-github-fatedier-frp-dev # 源码包，通常并不需要
 Network  ---> Web Servers/Proxies  ---> <*> frpc
 Network  ---> Web Servers/Proxies  ---> <*> frps
 
