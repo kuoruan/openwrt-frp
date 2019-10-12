@@ -31,21 +31,10 @@ GO_PKG_LDFLAGS:=-s -w
 include $(INCLUDE_DIR)/package.mk
 include $(TOPDIR)/feeds/packages/lang/golang/golang-package.mk
 
-define Package/frp/Default
-  TITLE:=A fast reverse proxy
-  URL:=https://github.com/fatedier/frp
-endef
-
-define Package/frp/Default/description
-frp is a fast reverse proxy to help you expose a local server behind a NAT or firewall
-to the internet. As of now, it supports tcp & udp, as well as httpand https protocols,
-where requests can be forwarded to internal services by domain name.
-endef
-
 define frp/templates
   define Package/$(1)
-  $$(call Package/frp/Default)
-    TITLE+= ($(1))
+    TITLE:=A fast reverse proxy ($(1))
+    URL:=https://github.com/fatedier/frp
     USERID:=frp=7000:frp=7000
     SECTION:=net
     CATEGORY:=Network
@@ -54,7 +43,9 @@ define frp/templates
   endef
 
   define Package/$(1)/description
-  $$(call Package/frp/Default/description)
+  frp is a fast reverse proxy to help you expose a local server behind a NAT or firewall
+  to the internet. As of now, it supports tcp & udp, as well as httpand https protocols,
+  where requests can be forwarded to internal services by domain name.
 
   This package contains the $(1).
   endef
