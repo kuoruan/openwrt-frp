@@ -35,7 +35,6 @@ define frp/templates
   define Package/$(1)
     TITLE:=A fast reverse proxy ($(1))
     URL:=https://github.com/fatedier/frp
-    USERID:=frp=7000:frp=7000
     SECTION:=net
     CATEGORY:=Network
     SUBMENU:=Web Servers/Proxies
