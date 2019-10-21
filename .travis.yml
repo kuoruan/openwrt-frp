@@ -87,8 +87,9 @@ install:
   - ln -s "$TRAVIS_BUILD_DIR" "package/${PACKAGE}"
 script:
   - cd "$SDK_HOME"
-  - "./scripts/feeds update -a >/dev/null"
-  - "./scripts/feeds install -a >/dev/null"
+  - ./scripts/feeds update -a
+  - test -d ./feeds/packages/net/frp && rm -rf ./feeds/packages/net/frp || true
+  - ./scripts/feeds install -a
   - make defconfig
   - make package/${PACKAGE}/compile V=s
   - find "${SDK_HOME}/bin/"
