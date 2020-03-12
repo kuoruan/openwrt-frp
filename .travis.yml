@@ -1,4 +1,5 @@
 dist: bionic
+os: linux
 sudo: false
 notifications:
   email: false
@@ -88,7 +89,15 @@ install:
 script:
   - cd "$SDK_HOME"
   - ./scripts/feeds update -a
-  - test -d ./feeds/packages/net/frp && rm -rf ./feeds/packages/net/frp || true
+  - |
+    test -d ./feeds/packages/net/frp && \
+      rm -rf ./feeds/packages/net/frp || true
+  - |
+    test -d ./feeds/packages/lang/golang && \
+      rm -rf ./feeds/packages/lang/golang || true
+  - |
+    curl https://codeload.github.com/openwrt/packages/tar.gz/${OPENWRT_GOLANG_COMMIT:-master} | \
+      tar -xz -C ./feeds/packages/lang --strip=2 packages-${OPENWRT_GOLANG_COMMIT:-master}/lang/golang
   - ./scripts/feeds install -a
   - make defconfig
   - make package/${PACKAGE}/compile V=s
@@ -99,9 +108,9 @@ deploy:
   provider: releases
   file_glob: true
   file: "${TRAVIS_BUILD_DIR}/*.ipk"
-  skip_cleanup: true
+  cleanup: false
+  edge: true
   on:
     tags: true
     all_branches: true
-  api_key:
-    secure: nFPuFSdL+/utr9qYreLDYlcpJ+st+tiIl1uv+KS3VIvlJ3LVydYIcKo3A55IlG3PhuVUzIN62DYXd0lDNmAqioWkn8PlpDSeFj7hwlJxxTXvspe1XaipB0/uhFDKfByt/b1daM1g//ycOeO6TC/Jbuxok9KO8qEiJ2KRWbx9rMVJemoNoOozJgwwcA2oek7WtU8j4A+k6c7R0O2V+6CBYRpiinkdzmtYC4tE958NKlJcCgrEKg2HoGGFZYZbyr3HFUCTa6o/BPwRm9B+UA0zePOCidaVuY81/OFmNQ9mD1BMhmDWfCRgKkqZ/FjXXv5qdX5bdyEQmJ9UbmTQK6gyLxuh7aDykzORnPEg/4ANr/YbuZ+tu9n/y8wW9fOjzuD0Y99lrk1AuM5V1dkCwMVH8EqFA+KQ5QG+uoeUm+tRBahqEnMhLu8kuGN/1V5ukioakDfMuwGgHvJrflpOMF7CTc/v/GtPHyG+FIfsv42lMhWXFJSTFQP2bbAEo26UsxuCClLISKDT7Tn/g1JVfs7hiEZ8+PV0fy2qIB7mUKr14zNO2V6oWPjQQvDAy19kJjTv81MG9tKGx7mLILEMvBjmtJJTwg8Y0MgOy1/0M1p3JuatndsZ0qICbho3sTWKuFlP5/kcIla3mmPv76MocCr84rbq4rOdff+v5rZ1J6b7cmQ=
+  token: $GITHUB_TOKEN
