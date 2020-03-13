@@ -17,9 +17,8 @@ git:
 env:
   global:
     - PACKAGE=frp
-    - GITHUB_USER=kuoruan
-    - GITHUB_REPO=openwrt-frp
     - DOWNLOAD_DIR=${HOME}/files
+    - CONFIG_CCACHE=y
 matrix:
   include:
     - env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/x86/64 SDK=-sdk-x86-64_
