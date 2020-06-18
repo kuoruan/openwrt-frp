@@ -41,6 +41,8 @@ matrix:
     - if: tag IS present
       env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/mvebu/cortexa9 SDK=-sdk-mvebu-cortexa9_
     - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/releases/19.07.2/targets/mvebu/cortexa9 SDK=-sdk-19.07.2-mvebu-cortexa9_
+    - if: tag IS present
       env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/mvebu/cortexa72 SDK=-sdk-mvebu-cortexa72_
     - if: tag IS present
       env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ipq806x/generic SDK=-sdk-ipq806x-generic_
