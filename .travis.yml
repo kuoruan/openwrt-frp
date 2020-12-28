@@ -101,6 +101,6 @@ deploy:
   cleanup: false
   edge: true
   on:
-    tags: true
-    all_branches: true
+    watch:
+      types: [started]
   token: $GITHUB_TOKEN
