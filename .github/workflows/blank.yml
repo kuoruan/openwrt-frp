@@ -100,7 +100,5 @@ deploy:
   file: "${TRAVIS_BUILD_DIR}/*.ipk"
   cleanup: false
   edge: true
-  on:
-    watch:
-      types: [started]
+  on: push
   token: $GITHUB_TOKEN
