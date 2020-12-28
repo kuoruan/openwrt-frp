@@ -1,0 +1,106 @@
+dist: bionic
+os: linux
+sudo: false
+notifications:
+  email: false
+language: c
+compiler: gcc
+cache:
+  bundler: true
+  ccache: true
+  directories:
+    - "${HOME}/dl"
+    - "${HOME}/files"
+git:
+  depth: 3
+  submodules: false
+env:
+  global:
+    - PACKAGE=frp
+    - DOWNLOAD_DIR=${HOME}/files
+    - CONFIG_CCACHE=y
+matrix:
+  include:
+    - env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/x86/64 SDK=-sdk-x86-64_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/x86/generic SDK=-sdk-x86-generic_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ar71xx/generic SDK=-sdk-ar71xx-generic_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ramips/mt7620 SDK=-sdk-ramips-mt7620_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm2708/bcm2709 SDK=-sdk-brcm2708-bcm2709_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm2708/bcm2710 SDK=-sdk-brcm2708-bcm2710_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm63xx/generic SDK=-sdk-brcm63xx-generic_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/bcm53xx/generic SDK=-sdk-bcm53xx-generic_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/brcm47xx/generic SDK=-sdk-brcm47xx-generic_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/mvebu/cortexa9 SDK=-sdk-mvebu-cortexa9_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/releases/19.07.2/targets/mvebu/cortexa9 SDK=-sdk-19.07.2-mvebu-cortexa9_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/mvebu/cortexa72 SDK=-sdk-mvebu-cortexa72_
+    - if: tag IS present
+      env: SDK_PATH=https://downloads.openwrt.org/snapshots/targets/ipq806x/generic SDK=-sdk-ipq806x-generic_
+install:
+  - mkdir -p "$DOWNLOAD_DIR" && cd "$DOWNLOAD_DIR"
+  - wget "${SDK_PATH}/sha256sums" -O sha256sums
+  - |
+    if ! grep -- "$SDK" sha256sums > sha256sums.small 2>/dev/null ; then
+      printf "\033[1;31m=== Can not find ${SDK} file in sha256sums.\033[m\n"
+      exit 1
+    fi
+  - export SDK_FILE="$(cat sha256sums.small | cut -d' ' -f2 | sed 's/*//g')"
+  - |
+    if ! sha256sum -c ./sha256sums.small 2>/dev/null ; then
+      wget "${SDK_PATH}/${SDK_FILE}" -O "$SDK_FILE"
+      if ! sha256sum -c ./sha256sums.small 2>/dev/null ; then
+        printf "\033[1;31m=== SDK can not be verified!\033[m\n"
+        exit 1
+      fi
+    fi
+  - file "${DOWNLOAD_DIR}/${SDK_FILE}"
+  - export SDK_HOME="$(mktemp -d)"
+  - cd "$SDK_HOME"
+  - tar -Jxf "${DOWNLOAD_DIR}/${SDK_FILE}" --strip=1
+  - test -d "${HOME}/dl" || mkdir -p "${HOME}/dl"
+  - test -d "dl" && rm -rf dl
+  - ln -s "${HOME}/dl/" dl
+  - echo "src-git base https://github.com/openwrt/openwrt.git" >feeds.conf
+  - echo "src-git packages https://github.com/openwrt/packages.git" >>feeds.conf
+  - echo "src-git luci https://github.com/openwrt/luci.git" >>feeds.conf
+  - echo "src-git routing https://git.openwrt.org/feed/routing.git" >>feeds.conf
+  - echo "src-git telephony https://github.com/openwrt/telephony.git" >>feeds.conf
+  - ln -s "$TRAVIS_BUILD_DIR" "package/${PACKAGE}"
+script:
+  - cd "$SDK_HOME"
+  - ./scripts/feeds update -a
+  - |
+    test -d ./feeds/packages/net/frp && \
+      rm -rf ./feeds/packages/net/frp || true
+  - |
+    test -d ./feeds/packages/lang/golang && \
+      rm -rf ./feeds/packages/lang/golang || true
+  - |
+    curl https://codeload.github.com/openwrt/packages/tar.gz/${OPENWRT_GOLANG_COMMIT:-master} | \
+      tar -xz -C ./feeds/packages/lang --strip=2 packages-${OPENWRT_GOLANG_COMMIT:-master}/lang/golang
+  - ./scripts/feeds install -a
+  - make defconfig
+  - make package/${PACKAGE}/compile V=s
+  - find "${SDK_HOME}/bin/"
+  - find "${SDK_HOME}/bin/" -name ${PACKAGE}*.ipk -exec cp {} "$TRAVIS_BUILD_DIR" \;
+  - ls -hl "$TRAVIS_BUILD_DIR" | grep .*\.ipk
+deploy:
+  provider: releases
+  file_glob: true
+  file: "${TRAVIS_BUILD_DIR}/*.ipk"
+  cleanup: false
+  edge: true
+  on:
+    watch:
+      types: [started]
+  token: $GITHUB_TOKEN
