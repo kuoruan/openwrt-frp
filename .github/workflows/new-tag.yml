@@ -103,7 +103,9 @@ jobs:
           git checkout master
 
           git rebase "$release_branch"
+          git push origin HEAD:master
+
           git tag -a "v${version}-${release}" -m "v${version}-${release}"
-          git push origin master --follow-tags
+          git push --tags
 
           git push origin --delete "$release_branch"
