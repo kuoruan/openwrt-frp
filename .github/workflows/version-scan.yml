@@ -67,9 +67,9 @@ jobs:
           git checkout -b "$release_branch"
 
           sed -i \
-            -e 's/^PKG_VERSION.*/PKG_VERSION:=${version}/' \
-            -e 's/^PKG_RELEASE.*/PKG_RELEASE:=1/' \
-            -e 's/^PKG_HASH.*/PKG_HASH:=${source_hash}/' \
+            -e "s/^PKG_VERSION.*/PKG_VERSION:=${version}/" \
+            -e "s/^PKG_RELEASE.*/PKG_RELEASE:=1/" \
+            -e "s/^PKG_HASH.*/PKG_HASH:=${source_hash}/" \
             Makefile
 
           git add -f Makefile
