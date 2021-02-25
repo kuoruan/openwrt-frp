@@ -27,21 +27,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}:openwrt-frp:${{ env.ARCH }}:cache:
 
-      - name: Setup CCache
-        uses: actions/cache@v2
-        with:
-          path: ~/.ccache
-          key: ${{ runner.os }}:openwrt-frp:${{ env.ARCH }}:ccache:${{ github.run_number }}
-          restore-keys: |
-            ${{ runner.os }}:openwrt-frp:${{ env.ARCH }}:ccache:
-
       - name: Install Dependencies
         run: |
-          sudo apt-get install -yq ccache gettext libncurses5-dev xsltproc
-          sudo update-ccache-symlinks
-          echo "/usr/lib/ccache" >> $GITHUB_PATH
-          echo "CONFIG_CCACHE=y" >> $GITHUB_ENV
-          echo "CONFIG_CCACHE_DIR=~/.ccache" >> $GITHUB_ENV
+          sudo apt-get update && \
+            sudo apt-get install -yq gettext libncurses5-dev xsltproc
 
       - name: Prepare SDK Home
         run: |
@@ -51,9 +40,6 @@ jobs:
         env:
           OPENWRT_GOLANG_COMMIT: ${{ secrets.OPENWRT_GOLANG_COMMIT }}
         run: sh compile.sh
-
-      - name: Show CCache Status
-        run: ccache -s
 
       - name: Save Build Result
         uses: actions/upload-artifact@v2
