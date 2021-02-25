@@ -73,7 +73,11 @@ jobs:
           pkg_version="$(grep '^PKG_VERSION:' Makefile 2>/dev/null | cut -d'=' -f2)"
           pkg_release="$(grep '^PKG_RELEASE:' Makefile 2>/dev/null | cut -d'=' -f2)"
 
-          if [ "${GITHUB_REF#refs/heads/}" = "releases/v${pkg_version}-${pkg_release}" ] ; then
+          release_branch="releases/v${pkg_version}-${pkg_release}"
+
+          echo "Release branch: $release_branch"
+
+          if [ "${GITHUB_REF#refs/heads/}" = "$release_branch" ] ; then
             echo "::set-output name=version::$pkg_version"
             echo "::set-output name=release::$pkg_release"
           else
