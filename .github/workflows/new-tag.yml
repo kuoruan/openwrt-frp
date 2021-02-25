@@ -69,6 +69,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Get Version
         id: get_version
@@ -96,8 +98,8 @@ jobs:
 
           git checkout "$release_branch"
 
-          git fetch origin master
-          git rebase origin/master
+          git fetch origin master:master
+          git rebase master
           git checkout master
 
           git rebase "$release_branch"
