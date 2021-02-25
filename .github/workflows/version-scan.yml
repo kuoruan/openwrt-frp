@@ -58,10 +58,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          if git rev-parse --quiet --verify "$release_branch" >/dev/null ; then
+          if [ "$(git ls-remote origin "$release_branch" | wc -l)" -gt "0" ] ; then
             # delete existing release branch
             git push origin :$release_branch 2>/dev/null || true
-            git branch -D "$release_branch"
           fi
 
           git checkout -b "$release_branch"
