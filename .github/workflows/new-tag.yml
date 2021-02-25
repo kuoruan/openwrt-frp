@@ -70,7 +70,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 2
+          fetch-depth: 10
 
       - name: Get Version
         id: get_version

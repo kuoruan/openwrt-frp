@@ -94,6 +94,6 @@ make package/${package_name}/compile V=s
 
 cd "$dir"
 
-find "$sdk_home/bin/" -type f -exec ls -lh {} \;
+find "$sdk_home_dir/bin/" -type f -exec ls -lh {} \;
 
-find "$sdk_home/bin/" -type f -name "${package_name}*.ipk" -exec cp -f {} "$dir" \;
+find "$sdk_home_dir/bin/" -type f -name "${package_name}*.ipk" -exec cp -f {} "$dir" \;
