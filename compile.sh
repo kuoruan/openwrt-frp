@@ -62,12 +62,12 @@ ln -sf "$feeds_dir" "feeds"
 cp -f feeds.conf.default feeds.conf
 
 # use github repositories
-sed -i '
-s#git.openwrt.org/openwrt/openwrt#github.com/openwrt/openwrt#
-s#git.openwrt.org/feed/packages#github.com/openwrt/packages#
-s#git.openwrt.org/project/luci#github.com/openwrt/luci#
-s#git.openwrt.org/feed/telephony#github.com/openwrt/telephony#
-' feeds.conf
+sed -i \
+	-e 's#git.openwrt.org/openwrt/openwrt#github.com/openwrt/openwrt#' \
+	-e 's#git.openwrt.org/feed/packages#github.com/openwrt/packages#' \
+	-e 's#git.openwrt.org/project/luci#github.com/openwrt/luci#' \
+	-e 's#git.openwrt.org/feed/telephony#github.com/openwrt/telephony#' \
+	feeds.conf
 
 ./scripts/feeds update -a
 
