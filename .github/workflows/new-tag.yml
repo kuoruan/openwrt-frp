@@ -72,7 +72,11 @@ jobs:
           pkg_version="$(grep '^PKG_VERSION:' Makefile 2>/dev/null | cut -d'=' -f2)
           pkg_release="$(grep '^PKG_RELEASE:' Makefile 2>/dev/null | cut -d'=' -f2)
 
-          if [ "${GITHUB_REF#refs/heads/}" == "releases/v${pkg_version}-${pkg_release}" ] ; then
+          current_branch="${GITHUB_REF#refs/heads/}"
+
+          echo "Current: $current_branch"
+
+          if [ "$current_branch" = "releases/v${pkg_version}-${pkg_release}" ] ; then
             echo "::set-output name=version::$pkg_version"
             echo "::set-output name=release::$pkg_release"
           else
@@ -97,3 +101,5 @@ jobs:
           git rebase "$release_branch"
           git tag -a "v${version}-${release}" -m "v${version}-${release}"
           git push origin master --follow-tags
+
+          git push origin --delete "$release_branch"
