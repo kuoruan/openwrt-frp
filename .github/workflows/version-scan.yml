@@ -52,7 +52,7 @@ jobs:
         if: steps.compare_version.outputs.version != '' && steps.compare_version.outputs.source_hash != ''
         run: |
           version="${{ steps.compare_version.outputs.version }}"
-          source_hash="${{ steps.compare_version.outputs.source_hash }}
+          source_hash="${{ steps.compare_version.outputs.source_hash }}"
           release_branch="releases/v${version}-1"
 
           git config user.name "github-actions[bot]"
