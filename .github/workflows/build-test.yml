@@ -14,7 +14,7 @@ jobs:
     env:
       SDK_URL_PATH: https://archive.openwrt.org/barrier_breaker/14.07/ar71xx/generic/
       SDK_NAME: OpenWrt-SDK-ar71xx-for
-      ARCH: x86_64
+      ARCH: ar71xx
       CACHE_DIR: ~/cache
     steps:
       - name: Checkout
