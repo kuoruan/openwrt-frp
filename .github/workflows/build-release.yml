@@ -97,6 +97,9 @@ jobs:
           - arch: x86_64
             sdk_url_path: https://downloads.openwrt.org/snapshots/targets/x86/64
             sdk_name: -sdk-x86-64_
+          - arch: ar71xx
+            sdk_url_path: https://archive.openwrt.org/barrier_breaker/14.07/ar71xx/generic/
+            sdk_name: OpenWrt-SDK-ar71xx-for
           # - arch: arc_arc700
           #   sdk_url_path: https://downloads.openwrt.org/snapshots/targets/arc770/generic
           #   sdk_name: -sdk-arc770-generic_
