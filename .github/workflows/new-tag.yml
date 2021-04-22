@@ -3,7 +3,7 @@ name: New Tag
 on:
   push:
     branches:
-      - "releases/v2143124"
+      - "releases/v*"
     tags-ignore:
       - "*"
 
