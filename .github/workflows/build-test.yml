@@ -2,8 +2,11 @@ name: Build Test
 
 on:
   push:
-    branches:
-     - master
+    branches-ignore:
+      - "releases/v*"
+    tags-ignore:
+      - "*"
+  pull_request:
 
 jobs:
   build:
