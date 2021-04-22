@@ -3,7 +3,7 @@ name: New Tag
 on:
   push:
     branches:
-      - "releases/v*"
+      - "releases/v2143124"
     tags-ignore:
       - "*"
 
@@ -11,10 +11,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      SDK_URL_PATH: https://downloads.openwrt.org/snapshots/targets/x86/64
-      SDK_NAME: -sdk-x86-64_
-      ARCH: x86_64
+      SDK_URL_PATH:  https://archive.openwrt.org/barrier_breaker/14.07/ar71xx/generic
+      SDK_NAME: OpenWrt-SDK-ar71xx-for
+      ARCH: ar71xx
       CACHE_DIR: ~/cache
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v2
