@@ -3,7 +3,7 @@ name: New Tag
 on:
   push:
     branches:
-      - "releases/v*"
+      - "releases/v0.36.2-1"
     tags-ignore:
       - "*"
 
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SDK_URL_PATH:  https://archive.openwrt.org/barrier_breaker/14.07/ar71xx/generic
-      SDK_NAME: OpenWrt-SDK-ar71xx-for
+      SDK_NAME: -SDK-ar71xx-for
       ARCH: ar71xx
       CACHE_DIR: ~/cache
       
